@@ -1,0 +1,78 @@
+*GRUPO 1*
+
+/*drop database mecanico;*/
+
+create database mecanico;
+
+use mecanico;
+
+/*TABELAS*/
+
+create table veiculo(
+	id int not null primary key auto_increment,
+    placa varchar(100) not null,
+    modelo varchar(100) not null,
+    ano date not null,
+    cor varchar(100) not null
+);
+
+create table cliente(
+	id int not null primary key auto_increment,
+    nome varchar(100) not null,
+    telefone varchar(100) not null,
+    email varchar(100) not null
+);
+
+create table mecanico(
+	id int not null primary key auto_increment,
+    nome varchar(100) not null,
+    especialidade varchar(255) not null
+);
+
+create table servico(
+	id int not null primary key auto_increment,
+    descricao varchar(255) not null,
+    preco decimal(10, 2) not null
+);
+
+create table ordem_servico(
+	id int not null primary key auto_increment,
+    veiculo_id int not null,
+		foreign key (veiculo_id) references veiculo(id),
+	cliente_id int not null,
+		foreign key (cliente_id) references cliente(id),
+	data_abertura date not null,
+    situacao varchar(255) not null
+);
+
+/*INSERIR*/
+
+insert into veiculo(placa, modelo, ano, cor) values ("ABC-1234", "Fiesta", "2018-05-14", "Prata");
+
+insert into cliente(nome, telefone, email) values ("Carlos", "123456789", "eric.reolon@example.com");
+
+insert into mecanico(nome, especialidade) values ("João", "Motor");
+
+insert into servico(descricao, preco) values ("Troca de óleo", 150.00);
+
+insert into ordem_servico(veiculo_id, cliente_id, data_abertura, situacao) values (1, 1, "2024-11-22", "Aberta");
+
+/*SELECIONAR E OUTROS*/
+
+select * from veiculo;
+select * from cliente;
+select * from servico;
+
+select * from ordem_servico where situacao = "Aberta";
+
+update ordem_servico set situacao = "Fechada" where id = 1;
+
+delete from cliente where nome = "Carlos";
+
+alter table ordem_servico add column data_fechamento date;
+
+select * from mecanico where especialidade = "Motor";
+
+insert into servico(descricao, preco) values ("Alinhamento", 80.00);
+
+/*select * from veiculo where modelo = "F";*/
